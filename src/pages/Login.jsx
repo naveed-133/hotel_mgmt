@@ -132,6 +132,10 @@ const Login = () => {
         setSnackbarMsg('');
     };
 
+    const handleSignupClick = () => {
+        navigate('/signup');
+    };
+
     return (
         <>
             <Container maxWidth={false} sx={{ maxWidth: '1800px' }} disableGutters>
@@ -203,6 +207,9 @@ const Login = () => {
                                 <div style={{ height: '0.0625rem', background: '#BDBDBD', width: '100%', marginTop: '0.5rem' }} />
                                 <OrText style={{ margin: '0rem 0.2rem' }}>{OR}</OrText>
                                 <div style={{ height: '0.0625rem', background: '#BDBDBD', width: '100%', marginTop: '0.5rem' }} />
+                            </FlexDiv>
+                            <FlexDiv style={{ margin: '1rem 0rem', justifyContent: 'center' }}>
+                                <LoginBoxBtn onClick={handleSignupClick}>Signup</LoginBoxBtn>
                             </FlexDiv>
                             {/* <ContinueSignText>{CONTINUE_SIGNING}</ContinueSignText>
                             <FlexDiv style={{ margin: '2rem 0rem 3rem 0rem', justifyContent: 'center' }}>
