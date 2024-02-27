@@ -37,7 +37,7 @@ const Login = () => {
         setDataSubmission(true);
 
         try {
-            const response = await axios.post('https://your-api-url/login', { email, password });
+            const response = await axios.post('https://hotels-management-backend.onrender.com/api/accounts/login', { email, password });
 
             // Check if the request was successful
             console.log('Login successful');
