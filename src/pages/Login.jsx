@@ -44,7 +44,8 @@ const Login = () => {
     const [open, setOpen] = useState(false);
     const [snackbarMsg, setSnackbarMsg] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
-
+    const navigate = useNavigate();
+    
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
         setEmptyEmail(event.target.value === "");
