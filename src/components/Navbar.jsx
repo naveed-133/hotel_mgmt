@@ -22,6 +22,10 @@ const Navbar = () => {
         navigate('/'); // Navigate to / route
     };
 
+    const handleRegisterManagerClick = () => {
+        navigate('/signup-manager'); // Navigate to / route
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -42,7 +46,7 @@ const Navbar = () => {
                     <>
                         <Button color="inherit" onClick={handleLoginClick}>Login</Button>
                         <Button color="inherit" onClick={handleRegisterClick}>Register</Button>
-                        <Button color="inherit">Register as Manager</Button>
+                            <Button color="inherit" onClick={handleRegisterManagerClick}>Register as Manager</Button>
                     </>
                 )}
             </Toolbar>

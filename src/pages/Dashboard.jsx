@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography, IconButton, useMediaQuery } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem, Tooltip, useMediaQuery } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HotelIcon from '@mui/icons-material/Hotel';
@@ -22,33 +22,22 @@ const Content = styled('div')(({ theme }) => ({
     },
 }));
 
-const DrawerContainer = styled(Drawer)(({ theme }) => ({
-    [theme.breakpoints.up('md')]: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-}));
-
-const DrawerPaper = styled('div')(({ theme }) => ({
-    width: drawerWidth,
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-}));
-
-const MenuButton = styled(IconButton)(({ theme }) => ({
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up('md')]: {
-        display: 'none',
-    },
-}));
-
 const Dashboard = () => {
     const isMobile = useMediaQuery('(max-width:600px)');
-    const [openDrawer, setOpenDrawer] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
     const navigate = useNavigate();
 
-    const toggleDrawer = () => {
-        setOpenDrawer(!openDrawer);
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuItemClick = (path) => {
+        navigate(path);
+        setAnchorEl(null);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     const handleRegisterHotelClick = () => {
@@ -59,34 +48,66 @@ const Dashboard = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Root>
-                <MenuButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
-                    <MenuIcon />
-                </MenuButton>
-                <DrawerContainer variant={isMobile ? 'temporary' : 'permanent'} open={openDrawer} onClose={toggleDrawer}>
-                    <DrawerPaper>
-                        <List>
-                            <ListItem button onClick={handleRegisterHotelClick}>
-                                <ListItemIcon>
+            <AppBar position="static">
+                <Toolbar>
+                    {isMobile && (
+                        <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleMenuClick}>
+                            <MenuIcon />
+                        </IconButton>
+                    )}
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Hotel Manager
+                    </Typography>
+                    {!isMobile && (
+                        <div>
+                            <Tooltip title="Register Hotel">
+                                <IconButton color="inherit" onClick={handleRegisterHotelClick}>
                                     <AccountCircleIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Register Hotel" />
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Dashboard">
+                                <IconButton color="inherit">
                                     <HotelIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Dashboard" />
-                            </ListItem>
-                            <ListItem button>
-                                <ListItemIcon>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Logout">
+                                <IconButton color="inherit">
                                     <ExitToAppIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </ListItem>
-                        </List>
-                    </DrawerPaper>
-                </DrawerContainer>
+                                </IconButton>
+                            </Tooltip>
+                        </div>
+                    )}
+                </Toolbar>
+            </AppBar>
+            <Menu
+                id="responsive-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+            >
+                <MenuItem onClick={() => handleMenuItemClick('/registerhotel')}>
+                    <AccountCircleIcon sx={{ mr: 1 }} />
+                    Register Hotel
+                </MenuItem>
+                <MenuItem onClick={() => handleMenuItemClick('/dashboard')}>
+                    <HotelIcon sx={{ mr: 1 }} />
+                    Dashboard
+                </MenuItem>
+                <MenuItem onClick={() => handleMenuItemClick('/logout')}>
+                    <ExitToAppIcon sx={{ mr: 1 }} />
+                    Logout
+                </MenuItem>
+            </Menu>
+            <Root>
                 <Content>
                     <Typography variant="h4" gutterBottom>
                         Welcome to Hotel Manager Dashboard

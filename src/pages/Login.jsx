@@ -40,7 +40,7 @@ const Login = () => {
             const response = await axios.post('https://hotels-management-backend.onrender.com/api/accounts/login', { email, password });
 
             // Check if the request was successful
-            console.log('Login successful');
+            console.log('Login successful', response);
         } catch (error) {
             console.error('Error logging in:', error);
         } finally {
